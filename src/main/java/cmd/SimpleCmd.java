@@ -1,6 +1,7 @@
 package cmd;
 
 import cmd.commands.BaseCommand;
+import cmd.commands.dir.DirCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import picocli.CommandLine;
@@ -27,6 +28,7 @@ public class SimpleCmd {
   private static final Logger LOG = LoggerFactory.getLogger(SimpleCmd.class);
 
   private static File currentLocation = new File(".");
+
 
   /**
    * Main starting point of the CLI. Here we parse the arguments from the user.
