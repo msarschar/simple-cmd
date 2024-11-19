@@ -57,24 +57,6 @@ public class DirCommand implements Runnable {
         }
     }
 
-//    public void setDirectory(String path) {
-//        File newDirectory = new File(path);
-//        if (!newDirectory.exists()) {
-//            System.out.println("Error: The specified path does not exist.");
-//        } else if (!newDirectory.isDirectory()) {
-//            System.out.println("Error: The specified path is not a directory.");
-//        } else {
-//            this.directory = newDirectory;
-//            System.out.println("Directory set to: " + this.directory.getAbsolutePath());
-//        }
-//        if (directory.isDirectory()) {
-//            File[] files = directory.listFiles();
-//            if (null != files) {
-//                Stream.of(files).sorted(getFileListComparator()).forEach(this::printLine);
-//            }
-//        }
-//    }
-
     private Comparator<String> getSortOrderAwareFileNameComparator(final String sortOrder) {
         if ("desc".equals(sortOrder)) {
             return String::compareTo;

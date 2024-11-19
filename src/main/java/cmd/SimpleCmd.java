@@ -62,19 +62,6 @@ public class SimpleCmd {
    */
   public static File getCurrentLocation() {
 
-    return getLocation();
-  }
-
-  public static File getLocation() {
-
-    return currentLocation;
-  }
-
-  /**
-   * @return {@link File} pointing to current location, to be used across application
-   */
-  public static File setCurrentLocation() {
-
     return currentLocation;
   }
 
