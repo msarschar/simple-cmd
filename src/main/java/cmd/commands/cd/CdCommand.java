@@ -44,19 +44,11 @@ public class CdCommand implements Runnable {
             return;
         }
 
-        try {
+        LOG.info("Current directory: {}", SimpleCmd.getCurrentLocation());
+        // update the current location
+        SimpleCmd.setCurrentLocation(target);
+        LOG.info("Directory changed to: " + SimpleCmd.getCurrentLocation());
 
-            LOG.info("Current directory: {}", System.getProperty("user.dir"));
-            // change the current directory
-            System.setProperty("user.dir", target.getAbsolutePath());
-
-            // update the current location
-            SimpleCmd.setCurrentLocation(target);
-            LOG.info("Directory changed to: " + SimpleCmd.getCurrentLocation());
-        } catch (Exception e) {
-            LOG.error("Error: " + e.getMessage());
-            e.printStackTrace();
-        }
     }
 
 }
