@@ -25,8 +25,8 @@ public class MkfCommand implements Runnable {
 
     public static final Logger LOG = LoggerFactory.getLogger(MkfCommand.class);
 
-    @CommandLine.Parameters(index = "0", description = "absolute path of the directory where the new file should be created")
-    private String filePath;
+    @CommandLine.Parameters(index = "0", description = "absolute path of the file that should be created")
+    private File file;
 
     public MkfCommand() {
         /* intentionally empty */
@@ -34,41 +34,38 @@ public class MkfCommand implements Runnable {
 
     @Override
     public void run() {
-        Path path = Path.of(filePath);
+
         //If directory is not absolute
-        if (!path.isAbsolute()){
-            LOG.error("The directory '{}' is not absolute. Please provide a different path.\n",filePath);
+        if (!file.isAbsolute()){
+            LOG.error("The directory '{}' is not absolute. Please provide a different path.\n",file);
             return;
         }
         //If file does not have an extension
-        //Takes file that was last written in path
-        Path fileName = path.getFileName();
-        if (!fileName.toString().contains(".")) {
-            path = path.resolveSibling(fileName.toString() + ".txt");
+        if (!file.getName().contains(".")) {
+            file = new File(file.getParent(),file.getName()+ ".txt");
+        }
+        //If directory does not exist
+        File parent = file.getParentFile();
+        if (parent == null) {
+            LOG.error("Unable to create a new file system at location '{}'.\n", file);
+            return;
+        }
+        if (!parent.exists()) {
+            LOG.error("No such parent directory: '{}'. Please create parent directory first.\n", parent);
+            return;
         }
 
-        if (Files.exists(path)){
-            Scanner scanner = new Scanner(System.in);
-            System.out.println("The file already exists at: " + path.toAbsolutePath());
-            System.out.print("Please use another name.\n");
+        if (file.exists()){
+            LOG.error("File already exists.\n",file);
             return;
         }
         else {
             try {
-                Files.createFile(path);
-                System.out.println("File was created successfully at: "+ path.toAbsolutePath());
+                file.createNewFile();
+                LOG.info("File was created successfully at: '{}'\n", file);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
-
-
-
-
-
-
-
-
-
     }
 }
